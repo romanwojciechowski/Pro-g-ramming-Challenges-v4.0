@@ -7,7 +7,7 @@ import "fmt"
 func main() {
 	var text string
 	var choice int
-	var shift rune
+	var shift int 
 
 	fmt.Print("Text: ")
 	fmt.Scanf("%s", &text)
@@ -21,36 +21,19 @@ func main() {
 	cipher(text, choice, shift)
 }
 
-func cipher(text string, choice int, shift rune) {
+func cipher(text string, choice int, shift int) {
 	chars := []rune(text)
-	switch choice {
-	case +1:
-		for i := 0; i < len(chars); i++ {
-			if chars[i] >= 'a' && chars[i] <= 'z' || chars[i] >= 'A' && chars[i] <= 'Z' {
-				dchar := chars[i] + shift
-				if dchar >= 'a' && dchar <= 'z' || dchar >= 'A' && dchar <= 'Z' {
-					fmt.Print(string(dchar))
-				} else {
-					fmt.Print(string(dchar - 26))
-				}
+	for i := 0; i < len(chars); i++ {
+		if chars[i] >= 'a' && chars[i] <= 'z' || chars[i] >= 'A' && chars[i] <= 'Z' {
+			dchar := chars[i] + rune(shift*choice)
+			if dchar >= 'a' && dchar <= 'z' || dchar >= 'A' && dchar <= 'Z' {
+				fmt.Print(string(dchar))
 			} else {
-				fmt.Print(string(chars[i]))	
+				fmt.Print(string(dchar + rune(-26 * choice)))
 			}
+		} else {
+			fmt.Print(string(chars[i]))	
 		}
-		fmt.Println()
-	case -1:
-		for i := 0; i < len(chars); i++ {
-			if chars[i] >= 'a' && chars[i] <= 'z' || chars[i] >= 'A' && chars[i] <= 'Z' {
-				dchar := chars[i] - shift
-				if dchar >= 'a' && dchar <= 'z' || dchar >= 'A' && dchar <= 'Z' {
-					fmt.Print(string(dchar))
-				} else {
-					fmt.Print(string(dchar + 26))
-				}
-			} else {
-				fmt.Print(string(chars[i]))	
-			}
-		}
-		fmt.Println()
 	}
+	fmt.Println()
 }
